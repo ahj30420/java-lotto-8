@@ -1,4 +1,4 @@
-package lotto;
+package lotto.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class LottoTest {
     @Test
@@ -21,5 +22,15 @@ class LottoTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    // TODO: 추가 기능 구현에 따른 테스트 코드 작성
+    @Test
+    void 로또_번호가_범위를_초과하면_예외가_발생한다() {
+        assertThatThrownBy(() -> new Lotto(List.of(1, 2, 3, 4, 5, 46)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 로또_정상_생성() {
+        Lotto lotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
+        assertThat(lotto.getNumbers()).containsExactly(1, 2, 3, 4, 5, 6);
+    }
 }
