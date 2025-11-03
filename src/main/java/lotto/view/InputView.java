@@ -8,15 +8,21 @@ import lotto.domain.Lotto;
 public class InputView {
     public static int readPurchaseAmount() {
         System.out.println("구입금액을 입력해 주세요.");
-        String input = Console.readLine();
-        try {
-            int amount = Integer.parseInt(input);
-             if (amount < 1000 || amount % 1000 != 0) {
-                throw new IllegalArgumentException("[ERROR] 구입 금액은 1000원 단위여야 합니다.");
+        while (true) {
+            try {
+                String input = Console.readLine();
+                int amount = Integer.parseInt(input);
+
+                if (amount < 1000 || amount % 1000 != 0) {
+                    throw new IllegalArgumentException("[ERROR] 구입 금액은 1000원 단위여야 합니다.");
+                }
+
+                return amount;
+            } catch (NumberFormatException e) {
+                System.out.println("[ERROR] 숫자 형식의 금액을 입력해야 합니다.");
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
-            return amount;
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("[ERROR] 숫자 형식의 금액을 입력해야 합니다.");
         }
     }
 
